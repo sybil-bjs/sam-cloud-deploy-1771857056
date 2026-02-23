@@ -24,7 +24,7 @@ RUN printf '%s\n' '#!/usr/bin/env bash' 'exec node /openclaw/dist/entry.js "$@"'
 COPY workspace/ /app/workspace-seed/
 
 # CACHE BUST - Change this to force start.sh rebuild
-ARG BOOTSTRAP_VERSION=2026-02-23-v4-SAFE
+ARG BOOTSTRAP_VERSION=2026-02-23-v5-SERVERJS
 COPY start.sh /app/start.sh
 RUN chmod +x /app/start.sh
 
