@@ -1,4 +1,10 @@
-*.env
+node_modules/
+dist/
+.env
 *.log
 .DS_Store
+*.tsbuildinfo
+*.db
 *.lock
+.vercel/
+.angular/
