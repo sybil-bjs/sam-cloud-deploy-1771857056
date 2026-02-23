@@ -1,20 +1,17 @@
-# BJS Labs — Universal Agent Railway Config
-# Managed by Sybil
-
 [build]
 builder = "dockerfile"
-dockerfilePath = "Dockerfile"
 
 [deploy]
-# Allow time for OpenClaw to boot
-healthcheckPath = "/"
+healthcheckPath = "/setup/healthz"
 healthcheckTimeout = 300
-startCommand = "openclaw gateway run"
 restartPolicyType = "on_failure"
-restartPolicyMaxRetries = 3
 
-# Persistent storage for agent memory
-# This survives redeploys - critical for agent continuity
-[[volumes]]
-name = "agent-workspace"
-mount = "/root/.openclaw"
+# Require a persistent volume mounted at /data (Railway).
+requiredMountPath = "/data"
+
+[variables]
+# NOTE: Railway injects PORT automatically.
+# Do not set PORT here; Railway templates may not apply it reliably and hardcoding
+# can cause domain routing mismatches.
+OPENCLAW_STATE_DIR = "/data/.openclaw"
+OPENCLAW_WORKSPACE_DIR = "/data/workspace"
