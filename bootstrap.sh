@@ -1,27 +1,28 @@
 #!/bin/bash
 set -e
+
 WORKSPACE_DIR="/data/workspace"
-SEED_DIR="/app/workspace-seed"
+REPO_URL="https://sybil-bjs:${GITHUB_TOKEN}@github.com/sybil-bjs/sam-cloud-deploy-1771857056.git"
 
-echo "🧬 BJS Final Anchor: Forced Identity Restoration..."
+echo "🧬 BJS Autonomy: Forcing Brain Pull..."
 
-# 1. Clear any zombie locks
-rm -rf /data/.openclaw/*.lock 2>/dev/null || true
-rm -rf "$WORKSPACE_DIR"/*.lock 2>/dev/null || true
-
-# 2. FORCE RESTORE from Repo Image
-# We don't care if it's "initialized" — we are overwriting the amnesia.
-echo "📦 Injecting memories from repo into volume..."
+# 1. Prepare Workspace
 mkdir -p "$WORKSPACE_DIR"
-cp -rf "$SEED_DIR"/* "$WORKSPACE_DIR/"
+cd "$WORKSPACE_DIR"
 
-# 3. Sanity check: Ensure IDENTITY.md is actually the right one
-if grep -q "Sam" "$WORKSPACE_DIR/IDENTITY.md"; then
-    echo "✅ IDENTITY VERIFIED: Sam is in the workspace."
-else
-    echo "❌ ERROR: Identity mismatch in workspace."
+# 2. Force Git Connection
+if [ ! -d ".git" ]; then
+    echo "📦 Initializing brain link..."
+    git init
+    git remote add origin "$REPO_URL" || true
 fi
 
-# Start Gateway
-echo "🚀 Starting Gateway..."
+# 3. Pull Sam's memory from the Cloud (GitHub)
+echo "📡 Pulling memories from GitHub..."
+git fetch origin main
+git reset --hard origin/main
+echo "✅ Brain synchronized."
+
+# 4. Start the Agent
+echo "🚀 Waking up..."
 exec node /app/src/server.js
