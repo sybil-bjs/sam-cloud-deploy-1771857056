@@ -22,6 +22,9 @@ RUN printf '%s\n' '#!/usr/bin/env bash' 'exec node /openclaw/dist/entry.js "$@"'
 
 # Seed the workspace
 COPY workspace/ /app/workspace-seed/
+
+# CACHE BUST - Change this to force bootstrap.sh rebuild
+ARG BOOTSTRAP_VERSION=2026-02-23-v4-SAFE
 COPY bootstrap.sh /app/bootstrap.sh
 RUN chmod +x /app/bootstrap.sh
 
@@ -32,5 +35,3 @@ RUN npm install --omit=dev
 EXPOSE 8080
 ENTRYPOINT ["tini", "--"]
 CMD ["/app/bootstrap.sh"]
-
-# Force rebuild: 2026-02-23-v3 - Fixed bootstrap.sh to not crash on git errors
