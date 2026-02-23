@@ -1,59 +1,56 @@
-# Sam Cloud ☁️
+# BJS Labs Agent Skills
 
-Official Railway deployment for **Sam** (Frontend/UX / Field Agent).
+Shared capabilities for BJS Labs AI agents (Sam, Sage, Sybil, Saber).
 
-## 🚀 Cloud Management
+## Skills
 
-### **How to Update Sam's Brain**
-You don't need to redeploy to give Sam new skills or memories.
-1. Edit files in the `workspace/` folder of this GitHub repo.
-2. Push to GitHub.
-3. Message Sam on Telegram:
-   > "Sam, run `git pull` and verify your new skills."
+| Skill | Description | Status |
+|-------|-------------|--------|
+| [a2a-protocol](./a2a-protocol/) | Agent-to-Agent communication via WebSocket relay | ✅ Active |
+| [agentic-learning](./agentic-learning/) | Self-improving memory, decisions, and evolution | ✅ Active |
+| [appointment-booking](./appointment-booking/) | WhatsApp scheduling synced to Google Calendar | ✅ Active |
+| [research-intelligence](./research-intelligence/) | Automated research discovery + synthesis (arXiv, Semantic Scholar) | ✅ Active |
+| [content-creation](./content-creation/) | Content creation with voice extraction + creative process | ✅ Active |
+| [creativity-engine](./creativity-engine/) | Stakes Protocol + Semantic Memory Mining for creative content | ✅ Active |
+| [decision-frameworks](./decision-frameworks/) | Structured decision-making patterns | ✅ Active |
+| [email-drafter](./email-drafter/) | Business email drafting with templates | ✅ Active |
+| [marketing-creativity](./marketing-creativity/) | Brand voice extraction + living client profiles | ✅ Active |
+| [marketing-module](./marketing-module/) | Marketing entry point, enforces client profiles | ✅ Active |
+| [meeting-summarizer](./meeting-summarizer/) | Voice-dictated notes → structured summaries | ✅ Active |
+| [smb-crm](./smb-crm/) | Customer database for Mexican SMBs (Sheets + Supabase) | ✅ Active |
+| [evolver](./evolver/) | Capability evolution engine | 🔧 Beta |
+| [failure-analyzer](./failure-analyzer/) | Root cause analysis and learning | 🔧 Beta |
+| [mac-use](./mac-use/) | macOS GUI automation via screenshots | ✅ Active |
+| [notion](./notion/) | Notion API integration | ✅ Active |
+| [openclaw-sec](./openclaw-sec/) | Security suite for AI agents | ✅ Active |
+| [recursive-self-improvement](./recursive-self-improvement/) | Continuous self-optimization | 🔧 Beta |
+| [reflect-learn](./reflect-learn/) | Learning from conversation analysis | 🔧 Beta |
+| [security-sentinel](./security-sentinel/) | Workspace security scanning | ✅ Active |
+| [self-evolve](./self-evolve/) | Autonomous self-modification | ⚠️ Experimental |
 
-### **How to Update OpenClaw (The Engine)**
-**⚠️ NEVER run `openclaw update` inside the Railway container.**
-To update the version, edit the `Dockerfile`:
-```dockerfile
-ARG OPENCLAW_GIT_REF=v2026.2.20
+## Installation
+
+```bash
+# Install a specific skill via ClawHub
+clawhub install github:BJS-Innovation-Lab/skills/creativity-engine
+
+# Or clone the whole repo
+git clone https://github.com/BJS-Innovation-Lab/skills.git
 ```
-Then commit and the Railway build will trigger automatically.
 
----
+## Documentation
 
-## 🏗️ Technical Infrastructure
+Each skill has its own `SKILL.md` with usage instructions.
 
-| Service | Detail |
-|---------|--------|
-| **Host** | Railway (Project: exciting-victory) |
-| **Persistence** | Mounted Volume at `/data` |
-| **Primary Workspace** | `/data/workspace` (Linked to this repo) |
-| **Sync Logic** | Bootstrap script forces GitHub -> Volume sync on boot |
+Full documentation on [Notion](https://notion.so) under BJS LABS workspace.
 
----
+## Team
 
-## 🔑 Required Environment Variables
-Set these in the Railway dashboard:
-- `ANTHROPIC_API_KEY` (Sam's unique token)
-- `TELEGRAM_BOT_TOKEN` (Test bot: 8584183537:AAG...)
-- `GITHUB_TOKEN` (Sybil's token for auto-pulls)
-- `OPENCLAW_WORKSPACE_DIR` = `/data/workspace`
-- `OPENCLAW_STATE_DIR` = `/data/.openclaw`
+- **Sam** - Frontend Lead
+- **Sage** - Backend Lead  
+- **Sybil** - ML/Research Lead
+- **Saber** - Sales & Marketing
 
----
+## License
 
-## 🛡️ Identity Anchor
-Sam's identity is "locked" by the `bootstrap.sh` script. On every boot, it ensures the cloud volume matches this repository, preventing "Amnesia" bugs.
-
-*Managed by Sybil (ML/Research) — BJS Labs*
-
----
-
-## 🚨 The Cutover Checklist (Before shutting down Local Sam)
-
-To complete the migration and prevent "Split-Brain" behavior, perform these steps:
-
-1. **Skills Migration:** Ensure the `skills/` and `rag/` folders from the Mac are pushed to this repo.
-2. **Cron Registry:** Export the cron job list from the Mac (`openclaw cron list --json`) and re-register them in the Cloud.
-3. **Database Conflict Prevention:** **SHUT DOWN** the local Mac gateway (`openclaw gateway stop`) before fully activating the Cloud Agent.
-4. **Secret Sync:** Verify `credentials/` or `.env` files are updated in the Railway environment variables.
+Proprietary - BJS Labs internal use only.
