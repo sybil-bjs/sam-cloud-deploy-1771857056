@@ -23,10 +23,10 @@ RUN printf '%s\n' '#!/usr/bin/env bash' 'exec node /openclaw/dist/entry.js "$@"'
 # Seed the workspace
 COPY workspace/ /app/workspace-seed/
 
-# CACHE BUST - Change this to force bootstrap.sh rebuild
+# CACHE BUST - Change this to force start.sh rebuild
 ARG BOOTSTRAP_VERSION=2026-02-23-v4-SAFE
-COPY bootstrap.sh /app/bootstrap.sh
-RUN chmod +x /app/bootstrap.sh
+COPY start.sh /app/start.sh
+RUN chmod +x /app/start.sh
 
 COPY src /app/src
 COPY package.json /app/package.json
@@ -34,4 +34,4 @@ RUN npm install --omit=dev
 
 EXPOSE 8080
 ENTRYPOINT ["tini", "--"]
-CMD ["/app/bootstrap.sh"]
+CMD ["/app/start.sh"]
