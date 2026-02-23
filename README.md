@@ -46,3 +46,14 @@ Set these in the Railway dashboard:
 Sam's identity is "locked" by the `bootstrap.sh` script. On every boot, it ensures the cloud volume matches this repository, preventing "Amnesia" bugs.
 
 *Managed by Sybil (ML/Research) — BJS Labs*
+
+---
+
+## 🚨 The Cutover Checklist (Before shutting down Local Sam)
+
+To complete the migration and prevent "Split-Brain" behavior, perform these steps:
+
+1. **Skills Migration:** Ensure the `skills/` and `rag/` folders from the Mac are pushed to this repo.
+2. **Cron Registry:** Export the cron job list from the Mac (`openclaw cron list --json`) and re-register them in the Cloud.
+3. **Database Conflict Prevention:** **SHUT DOWN** the local Mac gateway (`openclaw gateway stop`) before fully activating the Cloud Agent.
+4. **Secret Sync:** Verify `credentials/` or `.env` files are updated in the Railway environment variables.
